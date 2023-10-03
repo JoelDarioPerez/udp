@@ -1,7 +1,7 @@
-const dgram = require("dgram");
+import { createSocket } from "dgram";
 
 // Crear un servidor UDP
-const udpServer = dgram.createSocket("udp4");
+const udpServer = createSocket("udp4");
 
 // Configurar el servidor para escuchar en un puerto específico
 const udpPort = 6002;
