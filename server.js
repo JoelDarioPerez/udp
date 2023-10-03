@@ -1,29 +1,18 @@
-import dgram from "dgram";
+const net = require("net");
 
-// Crear un servidor UDP
-const udpServer = dgram.createSocket("udp4");
+// Escuchamos paquetes UDP en el puerto 6002
+const server = net.createServer(function (socket) {
+  // Obtenemos la IP del cliente
+  const clientIP = socket.remoteAddress;
 
-// Configurar el servidor para escuchar en un puerto específico
-const udpPort = 6002;
+  // Mostramos la IP en consola
+  console.log("Envía los paquetes a la IP: %s", clientIP);
 
-udpServer.on("error", (err) => {
-  console.error(`Error en el servidor UDP: ${err}`);
-  udpServer.close();
+  // Enviamos un mensaje de respuesta al cliente
+  socket.write("IP recibida");
+  socket.end();
 });
 
-udpServer.on("message", (message, rinfo) => {
-  // Cuando se recibe un paquete, se muestra por consola
-  console.log(
-    `Mensaje recibido desde ${rinfo.address}:${
-      rinfo.port
-    }: ${message.toString()}`
-  );
-});
+server.listen(6002);
 
-udpServer.on("listening", () => {
-  const address = udpServer.address();
-  console.log(`Servidor UDP escuchando en ${address.address}:${address.port}`);
-});
-
-// Iniciar el servidor UDP en el puerto especificado
-udpServer.bind(udpPort);
+console.log("Escuchando paquetes UDP en el puerto 6002...");
