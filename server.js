@@ -1,5 +1,4 @@
 import dgram from "dgram";
-import dgram from "dgram";
 
 // Crear un servidor UDP
 const udpServer = dgram.createSocket("udp4");
